@@ -1,0 +1,349 @@
+﻿
+
+.kafbuf {
+    display: none;
+}
+
+/*
+a {
+    color: black;
+    text-decoration: none;
+}
+
+
+    a:visited {
+        color: white;
+    }
+
+*/
+
+.header {
+    padding-top: 20px;
+}
+
+/*
+
+.header_head {
+    width: 800px;
+    margin-left: 0;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+*/
+
+
+.logo_back {
+    display: block;
+	-webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.warning:before{
+	content: url('../img/warn24.png');
+	position: relative;
+	z-index:999;
+	top: 7px;
+	margin-right: 10px; 
+}
+
+    .updown:hover .backtogmi_menu {
+        display: block;
+    }
+
+
+.button1 {
+    display: none;
+}
+
+.menu {
+    padding-top: 0px;       
+    margin-bottom: 0;
+}
+
+    .menu li {
+        cursor: pointer;     
+			
+    }
+	
+	
+.dep_list {
+    list-style: none;
+    width: 70%;
+    color: #192A78;
+    background: #ddd;
+    padding-left: 0;
+}
+
+    .dep_list li {
+        margin: 10px;
+        padding: 10px;
+    }
+
+        .dep_list li:hover {
+            background: #7884D0;
+            cursor: pointer;
+            color: #fff;
+        }
+
+.dep_label {
+    margin: 40px;
+}
+
+.span-text {
+    font-size: 18pt;
+    color: #192A78;
+    margin: 40px 0 20px 0;
+}
+
+#dep_info_table {
+    display: none;
+    text-align: center;
+}
+
+#info_graphic{
+    margin-top: 20px;
+}
+
+.info_block {
+    display: flex;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    
+    justify-content: space-around;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+
+.alltable {
+    display: none;
+}
+
+.table_rait_prog{
+	width: 60%;
+}
+
+#p_ggf, #p_mf, #p_fit, #p_fpp, #p_fet, #p_emf, #p_ef, #p_uf
+{
+	display: none;
+}
+
+#t2014 {
+    display: none;
+}
+
+#t2013 {
+    display: none;
+}
+
+#t2012 {
+    display: none;
+}
+
+#t2011 {
+    display: none;
+}
+
+#t2010 {
+    display: none;
+}
+
+#progn {
+    display: none;
+}
+
+
+.graphic{
+	margin-top: 20px;
+}
+
+#progn, #statistic, #container_for_graphics, #adminForm {
+    display: none;
+}
+
+.admin_panel_log{
+
+}
+
+.rightBTN{
+
+}
+
+.backShadow{
+
+}
+
+#adminForm{
+	width: 600px;
+	margin: auto;
+}
+
+#adminForm table{
+	
+}
+
+#adminForm table td{
+	border:0;
+}
+
+#adminForm table tr:hover td{
+	background-color: #fff;
+}
+
+.column1{
+	text-align: right;
+}
+
+/*
+.container_p {
+    color: #192A78;
+    font-size: x-large;
+    padding-top: 20px;
+}
+
+.progn_crit_tbs td {
+    padding: 6px;
+}
+
+#czp td {
+    padding: 2px;
+}
+
+.crit_p {
+    text-decoration: underline;
+}
+
+.input-button {
+    border: 0;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+    .input-button:hover {
+        color: #1d3347;
+        text-decoration: underline;
+    }
+
+.prikaz {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.footer {
+    width: auto;
+    color: #808080;
+    height: auto;
+	margin-top: 5px;
+}
+
+#selYear {
+    color: #192A78;
+    margin: 1%;
+    margin-top: 50px;
+    font-weight: bold;
+    font-size: 18pt;
+}
+
+.progn .table_rait{
+    text-align: center;
+}
+
+.ratingOnFak {
+    color: #192A78;
+}
+
+    .ratingOnFak > select {
+        font-size: 12pt;
+    }
+
+    .ratingOnFak > .table_rait {
+        margin: 2%;
+    }
+
+.hh3 {
+    font-size: 18pt;
+    color: #192A78;
+}
+
+.ratingOnFak > h3 {
+    font-size: 18pt;
+}
+
+.div_flex {
+    display: flex;
+    margin: 10px;
+}
+
+    .div_flex > select {
+        font-weight: bold;
+        font-size: 12pt;
+        margin: 4px;
+    }
+
+*/
+
+
+/*
+
+@media (max-width: 840px) {
+    body {
+        width: 100%;
+        margin: 0;
+    }
+
+    .logo_back {
+        display: none;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+
+    .backtogmi {
+        display: block;
+        position: inherit;
+    }
+
+    .backtogmi_forphone {
+        display: block;
+    }
+
+
+    .backtogmi_forphone_ul {
+        display: none;
+        height: 0;
+        background-color: #ddd;
+        list-style: none;
+        width: auto;
+        margin: 10px;
+        padding: 10px;
+    }
+
+        .backtogmi_forphone_ul li {
+            margin: 10px;
+        }
+
+            .backtogmi_forphone_ul li a {
+                color: #192A78;
+            }
+
+    .menu li {
+        display: block;
+        margin: 5px;
+    }
+
+    .header_head {
+        width: 100%;
+    }
+
+    .beta, .beta_smyle {
+        display: none;
+    }
+}
+
+*/
