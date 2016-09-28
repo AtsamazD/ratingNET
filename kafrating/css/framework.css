@@ -482,16 +482,16 @@ th {
 td,
 tfoot th {
   border-top: 1px solid #eeeeee;
-}
+}/*
 tr:hover th,
 tr:hover td {
   background: #fdf6e3;
-}
+}*/
 .f-table-zebra tbody tr:nth-child(2n) {
   background: #f8f8f8;
 }
-fieldset {
-  margin: 24px 0;
+fieldset t {
+  disp 24px 0;
 }
 legend {
   font-size: 18px;

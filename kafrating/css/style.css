@@ -65,6 +65,16 @@ a {
 			
     }
 	
+.menuBTN
+{
+    display: inline-flex;
+    list-style: none;
+    margin: 10px;
+}
+    .menuBTN li
+    {
+        margin: 5px;
+    }
 	
 .dep_list {
     list-style: none;

@@ -836,16 +836,8 @@ function yearClick(year) {
 					
                     break;
 				case 'admin_link':
-					$("#menu li").removeClass('active');
-					$("#admin").addClass('active');
-					
-                    $("#adminForm").css("display", "block");
-                    $("#progn").css("display", "none");
-                    $("#ratingOnFak").css("display", "none");
-                    $("#container_for_graphics").css("display", "none");
-					$("#statistic").css("display", "none");
-					$(".footer").css("display", "none");
-					
+					var url = "login.aspx";
+					$(location).attr('href',url);
                     break;
                 default:
 
