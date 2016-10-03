@@ -24,7 +24,16 @@
     </div>
     <form id="form1" runat="server" class="g-row">
         <div id="loginForm">
-        </div>
+            <h2>Выберите файл с критериям</h2>
+            <asp:FileUpload ID="FileUpload1" runat="server"  /> &nbsp <asp:TextBox ID="newFileName" runat="server"></asp:TextBox> <asp:Button ID="Button1" CssClass="f-bu" runat="server" Text="Загрузить"  OnClick="Button1_Click"/>
+            <asp:Label ID="UploadStatus" runat="server" Text=""></asp:Label>
+            <br /><br />
+            <asp:Label ID="LabelFilesList" runat="server" Text="Список файлов на сервере" Visible="False"></asp:Label>
+            <asp:ListBox ID="filesList" runat="server" Visible="False"></asp:ListBox>
+            <br />
+            <asp:Button ID="DeleteFiles" CssClass="f-bu" runat="server" Text="Очистить директорию" OnClick="DeleteFiles_Click" Visible="False" />
+        </div>        
+        <hr />
         <a href="index.html">Выход</a>
     </form>
 </body>
