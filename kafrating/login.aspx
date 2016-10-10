@@ -46,14 +46,17 @@
                 </tr>
             </table>          
             <br />
-            <asp:GridView ID="GridView1" runat="server"></asp:GridView>
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateEditButton="true" OnRowEditing="GridView1_RowEditing" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowUpdating="GridView1_RowUpdating">
+                
+                
+            </asp:GridView>
             <hr />
             <asp:Label ID="infoLabel" runat="server" Text="Техническая информация: " Font-Names="Consolas"></asp:Label>    
             <br />
             <asp:TextBox ID="infoBox" TextMode="MultiLine" CssClass="g-12" runat="server" Height="100px" Font-Names="Consolas" ReadOnly="True"></asp:TextBox>
         </div>        
         <hr />
-        
+                
         <a href="index.html">Выход</a>
     </form>
 </body>

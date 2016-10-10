@@ -12,27 +12,33 @@ public partial class kafrating_login : System.Web.UI.Page
 {
     string s1 = @"D:\wwwroot\Rating\upload\", s2 = @"D:\Документы\Rating.net\upload\";
     string[] files;
+    DataTable dt = new DataTable();
 
-    void loadList(string path)
+    protected void Page_Load(object sender, EventArgs e)
     {
-        try
+        if (!Page.IsPostBack)
         {
-            filesList.Items.Clear();
-            files = Directory.GetFiles(path);
-            filesList.Width = 200;
-            filesList.Height = 100;
-            for (int i = 0; i < files.Length; i++)
-                filesList.Items.Add(Path.GetFileName(files[i]));
+            Session["Table"] = dt;
+            BindData();
+            Page.EnableViewState = true;
         }
-        catch (Exception msg)
+        else
         {
-            MSG(msg.Message);
+            
         }
+        loadList(s2);
+    }
+
+    public DataTable GetDataTableFromCache()
+    {
+        DataTable dt = HttpContext.Current.Cache["DT"] as DataTable;
+        return dt;
     }
     void MSG(string msg)
     {
         infoBox.Text += DateTime.Now.Hour.ToString("00") + ":" + DateTime.Now.Minute.ToString("00") + ":" + DateTime.Now.Second.ToString("00") + "  " + msg + Environment.NewLine;
     }
+
     protected void Button1_Click(object sender, EventArgs e)
     {
         string savePath = s2;
@@ -59,10 +65,8 @@ public partial class kafrating_login : System.Web.UI.Page
         else
             UploadStatus.Text = "Не указан файл для загрузки!";
     }
-    protected void Page_Load(object sender, EventArgs e)
-    {
-        loadList(s2);
-    }
+
+
 
     protected void xlsButton_Click(object sender, EventArgs e)
     {
@@ -72,8 +76,6 @@ public partial class kafrating_login : System.Web.UI.Page
             Excel.Workbook xlWorkBook;
             Excel.Worksheet xlWorkSheet;
             Excel.Range ShtRange;
-
-            DataTable dt = new DataTable();
 
             object misValue = System.Reflection.Missing.Value;
 
@@ -113,6 +115,9 @@ public partial class kafrating_login : System.Web.UI.Page
 
             GridView1.DataSource = dt;
             GridView1.DataBind();
+
+            HttpContext.Current.Cache.Insert("DT", dt);
+
             xlApp.Quit();
 
             releaseObject(xlWorkSheet);
@@ -141,5 +146,44 @@ public partial class kafrating_login : System.Web.UI.Page
         {
             GC.Collect();
         }
+    }
+
+    void loadList(string path)
+    {
+        try
+        {
+            filesList.Items.Clear();
+            files = Directory.GetFiles(path);
+            filesList.Width = 200;
+            filesList.Height = 100;
+            for (int i = 0; i < files.Length; i++)
+                filesList.Items.Add(Path.GetFileName(files[i]));
+        }
+        catch (Exception msg)
+        {
+            MSG(msg.Message);
+        }
+    }
+
+    protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
+    {
+        GridView1.EditIndex = e.NewEditIndex;
+        BindData();
+    }
+
+    private void BindData()
+    {
+        GridView1.DataSource = Session["Table"];
+        GridView1.DataBind();
+    }
+    protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+    {
+
+    }
+    protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+    {
+        e.Cancel = true;
+        GridView1.EditIndex = -1;
+        BindData();
     }
 }
