@@ -24,14 +24,15 @@ public partial class kafrating_login : System.Web.UI.Page
         }
         else
         {
-            
+            if (Cache["Table"] != null)
+                dt = Cache["Table"] as DataTable;
         }
         loadList(s2);
     }
 
     public DataTable GetDataTableFromCache()
     {
-        DataTable dt = HttpContext.Current.Cache["DT"] as DataTable;
+        DataTable dt = Cache["DT"] as DataTable;
         return dt;
     }
     void MSG(string msg)
@@ -116,7 +117,8 @@ public partial class kafrating_login : System.Web.UI.Page
             GridView1.DataSource = dt;
             GridView1.DataBind();
 
-            HttpContext.Current.Cache.Insert("DT", dt);
+            Cache.Insert("DT", dt);
+            Cache["Table"] = dt;
 
             xlApp.Quit();
 
@@ -173,16 +175,25 @@ public partial class kafrating_login : System.Web.UI.Page
 
     private void BindData()
     {
-        GridView1.DataSource = Session["Table"];
+        GridView1.DataSource = dt;
         GridView1.DataBind();
     }
     protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
-
+        GridView1.EditIndex = -1;
+        BindData();
     }
     protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
     {
         e.Cancel = true;
+        GridView1.EditIndex = -1;
+        BindData();
+    }
+    protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        DataTable dt = Cache["Table"] as DataTable;
+        DataRow dr = dt.Rows[e.RowIndex];
+        dt.Rows.Remove(dr);
         GridView1.EditIndex = -1;
         BindData();
     }

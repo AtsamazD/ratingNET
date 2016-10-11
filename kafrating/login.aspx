@@ -46,8 +46,7 @@
                 </tr>
             </table>          
             <br />
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateEditButton="true" OnRowEditing="GridView1_RowEditing" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowUpdating="GridView1_RowUpdating">
-                
+            <asp:GridView ID="GridView1" runat="server"  OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating">
                 
             </asp:GridView>
             <hr />
