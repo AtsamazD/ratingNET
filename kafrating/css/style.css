@@ -4,33 +4,9 @@
     display: none;
 }
 
-/*
-a {
-    color: black;
-    text-decoration: none;
-}
-
-
-    a:visited {
-        color: white;
-    }
-
-*/
-
 .header {
     padding-top: 20px;
 }
-
-/*
-
-.header_head {
-    width: 800px;
-    margin-left: 0;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-}
-*/
-
 
 .logo_back {
     display: block;

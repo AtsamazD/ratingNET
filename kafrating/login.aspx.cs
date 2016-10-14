@@ -68,7 +68,37 @@ public partial class kafrating_login : System.Web.UI.Page
     }
 
 
+    string[] listsOfExcel()
+    {
+        string[] lists;
+        try
+        {
+            Excel.Application xlApp;
+            Excel.Workbook xlWorkBook;
+            Excel.Worksheet xlWorkSheet;           
 
+            object misValue = System.Reflection.Missing.Value;
+
+            xlApp = new Excel.Application();
+            xlWorkBook = xlApp.Workbooks.Open(s2 + filesList.Items[filesList.SelectedIndex + 1].Text, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+            lists = new string[xlWorkBook.Worksheets.Count] ;
+            for (int i = 1; i < xlWorkBook.Worksheets.Count; i++ )
+            {
+                xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(i);
+                lists[i - 1] = xlWorkSheet.Name;
+            }                
+
+            xlApp.Quit();
+                        
+            releaseObject(xlWorkBook);
+            releaseObject(xlApp);
+            return lists;
+        }
+        catch (Exception msg) { 
+            MSG(msg.Message);
+            return lists= new string[1] {null};
+        }                
+    }
     protected void xlsButton_Click(object sender, EventArgs e)
     {
         try
@@ -83,7 +113,7 @@ public partial class kafrating_login : System.Web.UI.Page
             xlApp = new Excel.Application();
             xlWorkBook = xlApp.Workbooks.Open(s2 + filesList.Items[filesList.SelectedIndex + 1].Text, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
             xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-
+            
             ShtRange = xlWorkSheet.UsedRange;
 
             for (int Cnum = 1; Cnum <= ShtRange.Columns.Count; Cnum++)
@@ -126,6 +156,19 @@ public partial class kafrating_login : System.Web.UI.Page
             releaseObject(xlWorkSheet);
             releaseObject(xlWorkBook);
             releaseObject(xlApp);
+            
+            #region Подгрузка списка листов
+            string[] lists = listsOfExcel();
+            listOfEx.DataSource = lists;
+            try
+            {
+                listOfEx.DataBind();
+            }
+            catch (Exception msg)
+            {
+                //MSG(msg.Message);
+            }
+            #endregion
         }
         catch (Exception msg)
         {
@@ -156,9 +199,8 @@ public partial class kafrating_login : System.Web.UI.Page
         try
         {
             filesList.Items.Clear();
-            files = Directory.GetFiles(path);
-            filesList.Width = 200;
-            filesList.Height = 100;
+            files = Directory.GetFiles(path);            
+            
             for (int i = 0; i < files.Length; i++)
                 filesList.Items.Add(Path.GetFileName(files[i]));
         }
@@ -219,5 +261,5 @@ public partial class kafrating_login : System.Web.UI.Page
         }
         if (x > 0)
             DeleteVoidRows(dt);
-    }
+    } 
 }

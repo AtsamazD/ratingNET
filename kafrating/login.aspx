@@ -4,12 +4,19 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-    <link rel="stylesheet" href="css/style.css" type="text/css"/>
-	<link rel="stylesheet" href="css/framework.css" type="text/css"/>
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <link rel="stylesheet" href="css/framework.css" type="text/css" />
     <title>Рейтинг кафедр | СКГМИ</title>
     <style type="text/css">
-        #filesList{
+        #filesList {
             vertical-align: top;
+        }
+
+        .divBlock {
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 10px;
+            padding-bottom: 5px;
         }
     </style>
 </head>
@@ -18,44 +25,48 @@
         <div class="logo_back f-bwi-pic">
             <a class="logo_a" href="http://rating.skgmi-gtu.ru/">
                 <img class="logo_img" alt="Вернуться на сайт СКГМИ" src="img/Logo0000.png" />
-            </a>		            
+            </a>
         </div>
-        <div class="header_head f-bwi-text">            
-		
-            <h5>ФЕДЕРАЛЬНОЕ ГОСУДАРСТВЕННОЕ БЮДЖЕТНОЕ ОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ ВЫСШЕГО ОБРАЗОВАНИЯ</h5>            
-			<h3 class="logo_skgmi">"Северо-Кавказский горно-металлургический институт (ГТУ)"</h3>
+        <div class="header_head f-bwi-text">
+
+            <h5>ФЕДЕРАЛЬНОЕ ГОСУДАРСТВЕННОЕ БЮДЖЕТНОЕ ОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ ВЫСШЕГО ОБРАЗОВАНИЯ</h5>
+            <h3 class="logo_skgmi">"Северо-Кавказский горно-металлургический институт (ГТУ)"</h3>
             <h1 class="logo_rait">Рейтинг кафедр | Ввод данных</h1>
-			</div>        
+        </div>
     </div>
     <form id="form1" runat="server" class="g-row">
-        <div id="loginForm">
+        <div id="loginForm" class="g-row">
             <h2>Выберите файл с критериями</h2>
-            <table>
-                <tr>
-                    <td><asp:FileUpload ID="FileUpload1" runat="server"  /></td>
-                    <td><asp:Button ID="Button1" CssClass="f-bu" runat="server" Text="Загрузить"  OnClick="Button1_Click"/>&nbsp<asp:Label ID="UploadStatus" runat="server" Text=""></asp:Label></td>
-                </tr>
-                <tr>
-                    <td><asp:Label ID="LabelFilesList" runat="server" Text="Список файлов на сервере"></asp:Label></td>
-                    <td><asp:ListBox ID="filesList" runat="server" Height="100px"></asp:ListBox>                        
-                    </td>
-                </tr>
-                <tr>
-                    <td><asp:Button ID="xlsButton" CssClass="f-bu" runat="server" Text="Подгрузить значение" OnClick="xlsButton_Click" /></td>
-                    <td></td>
-                </tr>
-            </table>          
-            <br />
-            <asp:GridView ID="GridView1" runat="server"  OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating">
+            <div class="divBlock g-12">
+                <asp:FileUpload ID="FileUpload1" runat="server" />
+                <asp:Button ID="Button1" CssClass="f-bu" runat="server" Text="Загрузить" OnClick="Button1_Click" />&nbsp<asp:Label ID="UploadStatus" runat="server" Text=""></asp:Label>
+            </div>
+            <div class="divBlock g-row">                
+                <div class="g-7">
+                    <h4>Список файлов на сервере</h4>
+                    <asp:ListBox ID="filesList" runat="server" Height="100px" CssClass="g-7"></asp:ListBox>
+                </div>
+                <div class="g-5">
+                    <h4>Листы выбранного файла</h4>
+                    <asp:ListBox ID="listOfEx" runat="server" Height="100px" CssClass="g-5"></asp:ListBox>
+                </div>
                 
+                <br />
+                <asp:Button ID="xlsButton" CssClass="f-bu" runat="server" Text="Подгрузить значение" OnClick="xlsButton_Click" />
+            </div>
+
+            <br />
+
+            <asp:GridView ID="GridView1" runat="server" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating">
             </asp:GridView>
+
             <hr />
-            <asp:Label ID="infoLabel" runat="server" Text="Техническая информация: " Font-Names="Consolas"></asp:Label>    
+            <asp:Label ID="infoLabel" runat="server" Text="Техническая информация: " Font-Names="Consolas"></asp:Label>
             <br />
             <asp:TextBox ID="infoBox" TextMode="MultiLine" CssClass="g-12" runat="server" Height="100px" Font-Names="Consolas" ReadOnly="True"></asp:TextBox>
-        </div>        
+        </div>
         <hr />
-                
+
         <a href="index.html">Выход</a>
     </form>
 </body>
