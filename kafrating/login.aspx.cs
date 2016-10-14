@@ -114,10 +114,11 @@ public partial class kafrating_login : System.Web.UI.Page
                 dt.AcceptChanges();
             }
 
+            dt = returnCorrectDT(dt);
+            
             GridView1.DataSource = dt;
             GridView1.DataBind();
 
-            Cache.Insert("DT", dt);
             Cache["Table"] = dt;
 
             xlApp.Quit();
@@ -196,5 +197,27 @@ public partial class kafrating_login : System.Web.UI.Page
         dt.Rows.Remove(dr);
         GridView1.EditIndex = -1;
         BindData();
+    }
+
+    DataTable returnCorrectDT(DataTable dt) {
+        DeleteVoidRows(dt);
+        return dt ;
+    }
+    void DeleteVoidRows(DataTable dt)
+    {
+        for (int i = 0; i < dt.Rows.Count; i++ )
+        {
+            if (dt.Rows[i].IsNull(dt.Columns[1]))
+                dt.Rows.Remove(dt.Rows[i]);
+        }
+        
+        int x = 0;
+        for (int i = 0; i < dt.Rows.Count; i++)
+        {
+            if (dt.Rows[i].IsNull(dt.Columns[1]))
+                x++;
+        }
+        if (x > 0)
+            DeleteVoidRows(dt);
     }
 }
