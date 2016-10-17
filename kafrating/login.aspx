@@ -35,28 +35,34 @@
         </div>
     </div>
     <form id="form1" runat="server" class="g-row">
-        <div id="loginForm" class="g-row">
-            <h2>Выберите файл с критериями</h2>
+        <div id="loginForm" class="g-row">            
             <div class="divBlock g-12">
+                <h1>1</h1>
+                <h2>Выберите файл с критериями</h2>
                 <asp:FileUpload ID="FileUpload1" runat="server" />
                 <asp:Button ID="Button1" CssClass="f-bu" runat="server" Text="Загрузить" OnClick="Button1_Click" />&nbsp<asp:Label ID="UploadStatus" runat="server" Text=""></asp:Label>
             </div>
             <div class="divBlock g-row">                
                 <div class="g-7">
+                    <h1>2</h1>
                     <h4>Список файлов на сервере</h4>
-                    <asp:ListBox ID="filesList" runat="server" Height="100px" CssClass="g-7"></asp:ListBox>
+                    <asp:ListBox ID="filesList" runat="server" Height="100px" CssClass="g-7">
+                        <asp:ListItem Value="crit" Text="criterion"></asp:ListItem>
+                        <asp:ListItem Value="my" Text="mylist"></asp:ListItem>
+                    </asp:ListBox>                    
+                    <asp:Button ID="xlsButton" CssClass="f-bu" runat="server" Text="Подгрузить листы" OnClick="xlsButton_Click" />
                 </div>
                 <div class="g-5">
+                    <h1>3</h1>
                     <h4>Листы выбранного файла</h4>
                     <asp:ListBox ID="listOfEx" runat="server" Height="100px" CssClass="g-5"></asp:ListBox>
-                </div>
-                
-                <br />
-                <asp:Button ID="xlsButton" CssClass="f-bu" runat="server" Text="Подгрузить значение" OnClick="xlsButton_Click" />
+                    <asp:Button ID="loadFromListButt" CssClass="f-bu" runat="server" OnClick="loadFromListButt_Click" Text="Подгрузить данные листа" />
+                </div>                                
             </div>
-
             <br />
-
+            <hr />            
+            <br />
+            <asp:Label ID="ListName" runat="server" Font-Size="18pt"></asp:Label>
             <asp:GridView ID="GridView1" runat="server" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating">
             </asp:GridView>
 
