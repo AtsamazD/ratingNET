@@ -12,6 +12,7 @@ public partial class kafrating_login : System.Web.UI.Page
 {
     string s1 = @"D:\wwwroot\Rating\upload\", s2 = @"D:\Документы\Rating.net\upload\";
     string[] files;
+    string globalSelectedNameOfList = "";
     DataTable dt = new DataTable();
 
 
@@ -88,13 +89,19 @@ public partial class kafrating_login : System.Web.UI.Page
             object misValue = System.Reflection.Missing.Value;
 
             xlApp = new Excel.Application();
-            xlWorkBook = xlApp.Workbooks.Open(s2 + filesList.Items[filesList.SelectedIndex + 1].Text, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+            xlWorkBook = xlApp.Workbooks.Open(s2 + filesList.Items[filesList.SelectedIndex].Text, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
 
             lists = new string[xlWorkBook.Worksheets.Count];
             for (int i = 1; i < xlWorkBook.Worksheets.Count; i++)
             {
                 xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(i);
                 lists[i - 1] = xlWorkSheet.Name;
+            }
+
+            if (xlWorkBook.Worksheets.Count == 1)   //если количество листов = 1, тогда загружем этот лист
+            {
+                xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+                lists[0] = xlWorkSheet.Name;
             }
 
             xlApp.Quit();
@@ -120,9 +127,9 @@ public partial class kafrating_login : System.Web.UI.Page
             object misValue = System.Reflection.Missing.Value;
 
             xlApp = new Excel.Application();
-            xlWorkBook = xlApp.Workbooks.Open(s2 + filesList.Items[filesList.SelectedIndex + 1].Text, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+            xlWorkBook = xlApp.Workbooks.Open(s2 + filesList.Items[filesList.SelectedIndex].Text, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
             xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-            Cache["xlsLists"] = xlWorkBook.Worksheets;
+            //Cache["xlsLists"] = xlWorkBook.Worksheets;
             Cache["xlBook"] = xlWorkBook;
 
 
@@ -155,38 +162,48 @@ public partial class kafrating_login : System.Web.UI.Page
         ShtRange = xlWorkSheet.UsedRange;
 
         string nameDT = "dt_" + xlWorkSheet.Name;
+        Cache["globalSelectedNameOfList"] = nameDT;
 
         if (Cache.Get(nameDT) == null)
         {
 
             DataTable dt = new DataTable();
 
-            for (int Cnum = 1; Cnum <= ShtRange.Columns.Count; Cnum++)
+            try
             {
-                dt.Columns.Add(
-                   new DataColumn((ShtRange.Cells[1, Cnum] as Excel.Range).Value2.ToString()));
-            }
-            dt.AcceptChanges();
-
-            string[] columnNames = new String[dt.Columns.Count];
-            for (int i = 0; i < dt.Columns.Count; i++)
-            {
-                columnNames[0] = dt.Columns[i].ColumnName;
-            }
-
-            for (int Rnum = 2; Rnum <= ShtRange.Rows.Count; Rnum++)
-            {
-                DataRow dr = dt.NewRow();
                 for (int Cnum = 1; Cnum <= ShtRange.Columns.Count; Cnum++)
                 {
-                    if ((ShtRange.Cells[Rnum, Cnum] as Excel.Range).Value2 != null)
-                    {
-                        dr[Cnum - 1] =
-            (ShtRange.Cells[Rnum, Cnum] as Excel.Range).Value2.ToString();
-                    }
+                    dt.Columns.Add(
+                       new DataColumn((ShtRange.Cells[1, Cnum] as Excel.Range).Value2.ToString()));
                 }
-                dt.Rows.Add(dr);
                 dt.AcceptChanges();
+
+                string[] columnNames = new String[dt.Columns.Count];
+                for (int i = 0; i < dt.Columns.Count; i++)
+                {
+                    columnNames[0] = dt.Columns[i].ColumnName;
+                }
+
+                for (int Rnum = 2; Rnum <= ShtRange.Rows.Count; Rnum++)
+                {
+                    DataRow dr = dt.NewRow();
+                    for (int Cnum = 1; Cnum <= ShtRange.Columns.Count; Cnum++)
+                    {
+                        if ((ShtRange.Cells[Rnum, Cnum] as Excel.Range).Value2 != null)
+                        {
+                            dr[Cnum - 1] =
+                (ShtRange.Cells[Rnum, Cnum] as Excel.Range).Value2.ToString();
+                        }
+                    }
+                    dt.Rows.Add(dr);
+                    dt.AcceptChanges();
+                }
+            }
+            catch(Exception err){
+                MSG(err.Message);
+                DataTable dtemptable = new DataTable();
+                GridView1.DataSource = dtemptable;
+                GridView1.DataBind();
             }
 
             ListName.Text = "ВЫБРАН ФАЙЛ/ЛИСТ: " + xlWorkBook.Name + "/" + xlWorkSheet.Name;
@@ -255,11 +272,26 @@ public partial class kafrating_login : System.Web.UI.Page
 
     private void BindData()
     {
-        GridView1.DataSource = dt;
-        GridView1.DataBind();
+        try
+        {
+            DataTable dtemptable = new DataTable();
+            string tempname = Cache.Get("globalSelectedNameOfList") as string; 
+            if (Cache.Get(tempname) != null)
+            {
+                dtemptable = Cache[tempname] as DataTable;
+                GridView1.DataSource = dtemptable;
+                GridView1.DataBind();
+            }
+        }
+        catch(Exception err){
+            //MSG(err.Message);
+        }
     }
     protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
+        string tempname = Cache.Get("globalSelectedNameOfList") as string;
+        DataTable tempDT = Cache[tempname] as DataTable;
+        tempDT.Rows[0][0] = "";
         GridView1.EditIndex = -1;
         BindData();
     }
@@ -299,5 +331,17 @@ public partial class kafrating_login : System.Web.UI.Page
         }
         if (x > 0)
             DeleteVoidRows(dt);
+    }
+    protected void xlsDel_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            File.Delete(s2 + filesList.Items[filesList.SelectedIndex]);
+            loadList(s2);
+        }
+        catch (Exception err)
+        {
+            MSG(err.Message);
+        }
     }
 }
