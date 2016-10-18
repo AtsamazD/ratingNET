@@ -291,7 +291,11 @@ public partial class kafrating_login : System.Web.UI.Page
     {
         string tempname = Cache.Get("globalSelectedNameOfList") as string;
         DataTable tempDT = Cache[tempname] as DataTable;
-        tempDT.Rows[0][0] = "";
+        tempDT.Rows[0][0] = ""; 
+        for(int i=0; i<tempDT.Columns.Count; i++){
+            tempDT.Rows[e.RowIndex][i]= GridView1.Rows[e.RowIndex][i];
+            
+        }
         GridView1.EditIndex = -1;
         BindData();
     }
