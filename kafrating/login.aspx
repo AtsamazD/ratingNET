@@ -18,9 +18,13 @@
             padding-top: 10px;
             padding-bottom: 5px;
         }
+
+        .g-width {
+            width: 94%;
+        }
     </style>
 </head>
-<body class="g">
+<body class="g g-width">
     <div class="header f-bwi g-row">
         <div class="logo_back f-bwi-pic">
             <a class="logo_a" href="http://rating.skgmi-gtu.ru/">
@@ -35,35 +39,37 @@
         </div>
     </div>
     <form id="form1" runat="server" class="g-row">
-        <div id="loginForm" class="g-row">            
+        <div id="loginForm" class="g-row">
             <div class="divBlock g-12">
                 <h1>1</h1>
                 <h2>Выберите файл с критериями</h2>
                 <asp:FileUpload ID="FileUpload1" runat="server" />
                 <asp:Button ID="Button1" CssClass="f-bu" runat="server" Text="Загрузить" OnClick="Button1_Click" />&nbsp<asp:Label ID="UploadStatus" runat="server" Text=""></asp:Label>
             </div>
-            <div class="divBlock g-row">                
+            <div class="divBlock g-row">
                 <div class="g-7">
                     <h1>2</h1>
                     <h4>Список файлов на сервере</h4>
                     <asp:ListBox ID="filesList" runat="server" Height="100px" CssClass="g-7">
                         <asp:ListItem Value="crit" Text="criterion"></asp:ListItem>
                         <asp:ListItem Value="my" Text="mylist"></asp:ListItem>
-                    </asp:ListBox>                    
-                    <asp:Button ID="xlsButton" CssClass="f-bu" runat="server" Text="Подгрузить листы" OnClick="xlsButton_Click" />
+                    </asp:ListBox>
+                    <asp:Button ID="xlsButton" CssClass="f-bu f-bu-success" runat="server" Text="Подгрузить листы" OnClick="xlsButton_Click" />
+                    &nbsp&nbsp&nbsp
+                    <asp:Button ID="xlsDel" CssClass="f-bu f-bu-warning" runat="server" Text="Удалить файл" OnClick="xlsDel_Click" />
                 </div>
                 <div class="g-5">
                     <h1>3</h1>
                     <h4>Листы выбранного файла</h4>
                     <asp:ListBox ID="listOfEx" runat="server" Height="100px" CssClass="g-5"></asp:ListBox>
-                    <asp:Button ID="loadFromListButt" CssClass="f-bu" runat="server" OnClick="loadFromListButt_Click" Text="Подгрузить данные листа" />
-                </div>                                
+                    <asp:Button ID="loadFromListButt" CssClass="f-bu f-bu-default" runat="server" OnClick="loadFromListButt_Click" Text="Подгрузить данные листа" />
+                </div>
             </div>
             <br />
-            <hr />            
+            <hr />
             <br />
             <asp:Label ID="ListName" runat="server" Font-Size="18pt"></asp:Label>
-            <asp:GridView ID="GridView1" runat="server" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating">
+            <asp:GridView ID="GridView1" runat="server" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit" AutoGenerateEditButton="true">
             </asp:GridView>
 
             <hr />
@@ -71,9 +77,10 @@
             <br />
             <asp:TextBox ID="infoBox" TextMode="MultiLine" CssClass="g-12" runat="server" Height="100px" Font-Names="Consolas" ReadOnly="True"></asp:TextBox>
         </div>
-        <hr />
-
-        <a href="index.html">Выход</a>
     </form>
+    <br />
+
+    <hr />
+    <a href="index.html">Выход</a>
 </body>
 </html>
